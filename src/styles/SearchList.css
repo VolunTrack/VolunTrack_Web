@@ -1,0 +1,39 @@
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+  
+.result-item {
+    border: 1px solid #ccc;
+    padding: 1em;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+  
+.result-item h3 {
+    margin-top: 0;
+    font-size: larger;
+}
+  
+.result-item .location-info {
+    font-size: small;
+    color: #999;
+    display: block;
+    margin-bottom: 0.5em; /* Adjust this value to add more or less space */
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines to display */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+  
+.no-results {
+    color: #999;
+    text-align: center;
+    margin-top: 2em;
+}
+  
