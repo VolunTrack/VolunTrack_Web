@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import './../styles/SearchList.css';
 
 const truncateText = (text, maxLines) => {
@@ -19,7 +21,7 @@ const truncateText = (text, maxLines) => {
   return truncatedText;
 };
 
-const SearchList = ({ results, term }) => {
+const SearchList = ({ results = [], term }) => {
   const filteredResults = results.filter(result => 
     result.name.toLowerCase().includes(term.toLowerCase()) ||
     (result.city && result.city.toLowerCase().includes(term.toLowerCase())) ||
@@ -35,7 +37,9 @@ const SearchList = ({ results, term }) => {
 
           return (
             <div key={result.id} className="result-item">
-              <h3>{result.name}</h3>
+              <h3>
+                <Link to={`/result/${result.id}`}>{result.name}</Link>
+              </h3>
               <p><strong>Organization:</strong> {result.organization}</p>
               <a className="location-info">{city} | {result.categories}</a>
               <p className="description">{truncatedDescription}</p>
@@ -47,6 +51,11 @@ const SearchList = ({ results, term }) => {
       )}
     </div>
   );
+};
+
+SearchList.propTypes = {
+  results: PropTypes.array,
+  term: PropTypes.string.isRequired
 };
 
 export default SearchList;

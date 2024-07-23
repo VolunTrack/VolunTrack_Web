@@ -3,14 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './styles/SearchScreen.css';
 import useResults from './hooks/useResults';
 import SearchList from './components/SearchList';
+import SearchIcon from './assets/SearchIcon.png';
 
-const SearchScreen = ({ searchTerm }) => {
+const SearchScreen = ({ searchTerm, results }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const query = new URLSearchParams(location.search);
   const initialTerm = query.get('term') || searchTerm;
   const [term, setTerm] = useState(initialTerm);
-  const [searchApi, results, errorMessage] = useResults();
+  const [searchApi, fetchedResults, errorMessage] = useResults();
 
   useEffect(() => {
     if (term) {
@@ -35,17 +36,19 @@ const SearchScreen = ({ searchTerm }) => {
       <div className="container">
         <div className="search-section">
           <form onSubmit={handleSearchSubmit}>
-            <h3>Showing Results for</h3>
+            <h3>Search Results for</h3>
             <input 
               type="text" 
               value={term} 
               onChange={handleInputChange} 
             />
-            <button type="submit">Search</button>
+            <div className="search-icon" onClick={handleSearchSubmit}>
+              <img src={SearchIcon} alt="Search" />
+            </div>
           </form>
         </div>
 
-        <SearchList results={results} term={term} />
+        <SearchList results={fetchedResults.length > 0 ? fetchedResults : results} term={term} />
 
         {errorMessage && <div className="error-message">{errorMessage}</div>}
       </div>
