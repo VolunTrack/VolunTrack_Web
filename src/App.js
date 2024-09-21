@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-route
 import './styles/App.css';
 import SearchBar from './components/SearchBar';
 import SearchScreen from './SearchScreen';
-import DetailScreen from './DetailScreen';
-import useResults from './hooks/useResults'; 
 
 import logo from './assets/adaptive-icon-cropped.png';
 import instagramLogo from './assets/instagram-logo.png';
@@ -116,11 +114,9 @@ const Home = ({ handleSearchSubmit }) => (
 const App = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchApi, results, errorMessage] = useResults();
 
   const handleSearchSubmit = (term) => {
     setSearchTerm(term);
-    searchApi(term);
     navigate(`/search?term=${term}`);
   };
 
@@ -143,7 +139,6 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home handleSearchSubmit={handleSearchSubmit} />} />
           <Route path="/search" element={<SearchScreen searchTerm={searchTerm} />} />
-          <Route path="/result/:id" element={<DetailScreen results={results} />} />
         </Routes>
       </main>
       <footer className="footer">
